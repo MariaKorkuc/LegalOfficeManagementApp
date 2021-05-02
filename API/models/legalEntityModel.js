@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var LegalEntitiesSchema = new Schema({
+var LegalEntitySchema = new Schema({
     roleInCase: {
         type: String,
         required: 'Role is required'
@@ -17,4 +17,4 @@ var LegalEntitiesSchema = new Schema({
     }
 }, { strict: false });
 
-module.exports = mongoose.model('Legal Entities', LegalEntitiesSchema);
+module.exports = mongoose.model('Legal Entities', LegalEntitySchema);

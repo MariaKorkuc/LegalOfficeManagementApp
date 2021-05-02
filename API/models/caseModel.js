@@ -10,9 +10,9 @@ var CaseSchema = new Schema({
         type: String,
         validate: {
             validator: function(v) {
-                return /^\w{8}$/.test(v);
+                return /\w{8}$/.test(v);
             },
-            message: 'Name is not valid!, Pattern("^\w{8}$")'
+            message: 'Name is not valid!, Pattern("\w{8}$")'
         },
         required: 'Case name is required',
         unique: true

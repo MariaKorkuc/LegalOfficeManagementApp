@@ -1,14 +1,15 @@
 'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-const Double = require('@mongoosejs/double');
+require('mongoose-double')(mongoose);
+var DoubleType = mongoose.Schema.Types.Double;
 
 var ClientSchema = new Schema({
     pesel: {
         type: String,
         validate: {
             validator: function(v) {
-                return /^\d+$/.test(v);
+                return /\d{11}/.test(v);
             },
             message: 'Pesel number is not valid!, Pattern("^\d+$")'
         },
@@ -19,18 +20,18 @@ var ClientSchema = new Schema({
         type: String,
         validate: {
             validator: function(v) {
-                return /^\w{8}$/.test(v);
+                return /^[a-zA-Z\-]+$/i.test(v);
             },
             message: 'Name is not valid!, Pattern("^\w{8}$")'
         },
         required: 'Client name is required',
     },
     bill: {
-        type: Double,
+        type: DoubleType,
         default: 0.0
     },
     payments: {
-        type: Double,
+        type: DoubleType,
         default: 0.0
     },
     decription: {
