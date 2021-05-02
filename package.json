@@ -1,0 +1,29 @@
+{
+  "name": "legalofficemanagementapp",
+  "version": "1.0.0",
+  "description": "Legal office management app",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dateformat": "^4.5.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.7",
+    "nanoid": "^3.1.22"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.6.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariaKorkuc/LegalOfficeManagementApp.git"
+  },
+  "author": "Julia Humiecka, Maria Korkuc, Adam Machaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MariaKorkuc/LegalOfficeManagementApp/issues"
+  },
+  "homepage": "https://github.com/MariaKorkuc/LegalOfficeManagementApp#readme"
+}
