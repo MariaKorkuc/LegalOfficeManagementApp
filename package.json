@@ -2,7 +2,7 @@
   "name": "legalofficemanagementapp",
   "version": "1.0.0",
   "description": "Legal office management app",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dateformat": "^4.5.1",
