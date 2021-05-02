@@ -12,6 +12,8 @@ var express = require('express'),
   User = require('./API/models/userModel'),
   Document = require('./API/models/documentModel'),
   SentenceAppeal = require('./API/models/sentenceappealModel'),
+  Client = require('./API/models/clientModel'),
+  Judge = require('./API/models/judgeModel'),
   bodyParser = require('body-parser');
 
 
@@ -41,12 +43,21 @@ var routesCases = require('./API/routes/caseRoutes');
 var routesUsers = require('./API/routes/userRoutes');
 var routesDocuments = require('./API/routes/documentRoutes');
 var routesSa = require('./API/routes/sentenceappealRoutes');
-
+var routesClients = require('./API/routes/clientRoutes');
+var routesJudges = require('./API/routes/judgeRoutes');
+var routesLegalEntities = require('./API/routes/legalEntityRoutes');
+var routesContactDetails = require('./API/routes/contactDetailsRoutes');
+var routesAppointmentRoutes = require('./API/routes/appointmentRoutes');
 
 routesCases(app);
 routesUsers(app);
 routesDocuments(app);
 routesSa(app);
+routesClients(app);
+routesJudges(app);
+routesLegalEntities(app);
+routesContactDetails(app);
+routesAppointmentRoutes(app);
 
 console.log("Connecting DB to: " + mongoDBURI);
 mongoose.connection.on("open", function (err, conn) {
