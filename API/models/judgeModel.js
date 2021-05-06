@@ -20,4 +20,4 @@ var JudgeSchema = new Schema({
     }
 }, { strict: false });
 
-module.exports = mongoose.model('judges', LegalEntitiesSchema);
+module.exports = mongoose.model('Judges', JudgeSchema);
