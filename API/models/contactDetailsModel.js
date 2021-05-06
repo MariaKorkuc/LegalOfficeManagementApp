@@ -17,7 +17,7 @@ var ContactDetailsSchema = new Schema({
         required: 'Enter the phone number'
     },
     photo: {
-        type: Image,
+        type: Buffer,
     },
     type: {
         type: String,

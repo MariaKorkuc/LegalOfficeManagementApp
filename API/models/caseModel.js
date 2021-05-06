@@ -8,12 +8,6 @@ const customAlphabet = require("nanoid").customAlphabet;
 var CaseSchema = new Schema({
     name: {
         type: String,
-        validate: {
-            validator: function(v) {
-                return /\w{8}$/.test(v);
-            },
-            message: 'Name is not valid!, Pattern("\w{8}$")'
-        },
         required: 'Case name is required',
         unique: true
     },
