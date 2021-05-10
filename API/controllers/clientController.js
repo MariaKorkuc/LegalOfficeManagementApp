@@ -63,7 +63,7 @@ exports.update_a_client = function(req, res) {
 
 
 exports.delete_a_client = function(req, res) {
-    Client.deleteOne({_id: req.params.documentId}, function(err, client) {
+    Client.deleteOne({_id: req.params.clientId}, function(err, client) {
         if (err){
             res.status(500).send(err);
         }
