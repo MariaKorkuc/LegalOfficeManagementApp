@@ -1,29 +1,29 @@
-// constexpress = require('express');
-// constapp = express();
-// constport = 3000;
-// app.get('/', (req, res) => res.send('Hello World! '));
-// app.listen(port, () => console.log('Example app listening on port '+port));
+const  express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+const morgan = require('morgan');
+const fileUpload = require('express-fileupload');
 
-var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 8080,
-  mongoose = require('mongoose'),
-  Case = require('./API/models/caseModel'),
-  User = require('./API/models/userModel'),
-  Document = require('./API/models/documentModel'),
-  SentenceAppeal = require('./API/models/sentenceappealModel'),
-  Client = require('./API/models/clientModel'),
-  Judge = require('./API/models/judgeModel'),
-  LegalEntities = require('./API/models/legalEntityModel'),
-  ContactDetails = require('./API/models/contactDetailsModel'),
-  Appointments = require('./API/models/appointmentModel'),
-  bodyParser = require('body-parser');
 
+const Case = require('./API/models/caseModel');
+const User = require('./API/models/userModel');
+const Document = require('./API/models/documentModel');
+const SentenceAppeal = require('./API/models/sentenceappealModel');
+const Client = require('./API/models/clientModel');
+const Judge = require('./API/models/judgeModel');
+const LegalEntities = require('./API/models/legalEntityModel');
+const ContactDetails = require('./API/models/contactDetailsModel');
+const Appointments = require('./API/models/appointmentModel');
+
+
+var mongoDBUser = process.env.user || "legalAdmin";
+var mongoDBPass = process.env.pass || "UWMVD2SkPx1maUfWRvNk";
 
 var mongoDBHostname = process.env.mongoDBHostname || "localhost";
 var mongoDBPort = process.env.mongoDBPort || "27017";
 var mongoDBName = process.env.mongoDBName || "LegalOfficeManagement";
-var mongoDBURI = "mongodb://" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
+var mongoDBURI = "mongodb://" + mongoDBUser + ":" + mongoDBPass + "@" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
 
 
 mongoose.set('useCreateIndex', true); //removes a deprecation warning
@@ -38,8 +38,32 @@ mongoose.connect(mongoDBURI, {
     useUnifiedTopology: true
 });
 
+
+const app = express();
+const port = process.env.PORT || 8080;
+
+app.set('port', port);
+
+
+app.use(morgan('dev'));
+
+app.use(fileUpload({
+    createParentPath: true,
+    useTempFiles : true,
+    safeFileNames: true,
+    preserveExtension: true,
+    tempFileDir: '/tmp/'
+}));
+
+app.use('/download', express.static('/tmp'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['UWMVD2SkPx1maUfWRvNk'],
+    maxAge: 1000 * 60 * 60 * 24 //24h valid session
+}));
 
 
 var routesCases = require('./API/routes/caseRoutes');
@@ -51,6 +75,15 @@ var routesJudges = require('./API/routes/judgeRoutes');
 var routesLegalEntities = require('./API/routes/legalEntityRoutes');
 var routesContactDetails = require('./API/routes/contactDetailsRoutes');
 var routesAppointmentRoutes = require('./API/routes/appointmentRoutes');
+
+const { authRoutes } = require('./API/routes/authRoutes');
+const { authMiddleware } = require('./API/middleware/authMiddleware');
+
+
+authRoutes(app);
+
+// auth middleware 
+app.use(authMiddleware);
 
 routesCases(app);
 routesUsers(app);
@@ -70,5 +103,6 @@ mongoose.connection.on("open", function (err, conn) {
 });
 
 mongoose.connection.on("error", function (err, conn) {
+
     console.error("DB init error " + err);
 });
