@@ -1,13 +1,13 @@
 'use strict';
 module.exports = function(app) {
-    var LegalEnities = require('../controllers/legalEntityController');
+    var LegalEntities = require('../controllers/legalEntityController');
   
-    app.route('/LegalEnities')
-        .get(LegalEnities.list_all_appointment)
-        .post(LegalEnities.create_an_appointment)
+    app.route('/LegalEntities')
+        .get(LegalEntities.list_all_legalEntity)
+        .post(LegalEntities.create_a_legalEntity)
     
-    app.route('/LegalEnities/:LegalEnityId')
-        .get(LegalEnities.read_an_appointment)
-        .put(LegalEnities.update_an_appointment)
-        .delete(LegalEnities.delete_an_appointment)
+    app.route('/LegalEntities/:LegalEntityId')
+        .get(LegalEntities.read_a_legalEntity)
+        .put(LegalEntities.update_a_legalEntity)
+        .delete(LegalEntities.delete_a_legalEntity)
 };
