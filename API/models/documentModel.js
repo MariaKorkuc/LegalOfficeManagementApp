@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-const customAlphabet = require("nanoid").customAlphabet;
-const idGenerator = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 5);
-const dateFormat = require('dateformat');
+// const customAlphabet = require("nanoid").customAlphabet;
+// const idGenerator = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 5);
+// const dateFormat = require('dateformat');
 
 
 var AttachmentSchema = new Schema({

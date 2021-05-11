@@ -14,6 +14,9 @@ var express = require('express'),
   SentenceAppeal = require('./API/models/sentenceappealModel'),
   Client = require('./API/models/clientModel'),
   Judge = require('./API/models/judgeModel'),
+  LegalEntities = require('./API/models/legalEntityModel'),
+  ContactDetails = require('./API/models/contactDetailsModel'),
+  Appointments = require('./API/models/appointmentModel'),
   bodyParser = require('body-parser');
 
 
