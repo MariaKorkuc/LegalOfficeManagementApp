@@ -5,11 +5,15 @@
   "main": "app.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cookie-session": "^1.4.0",
     "dateformat": "^4.5.1",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "mongoose": "^5.12.7",
     "mongoose-double": "^0.0.1",
-    "nanoid": "^3.1.22"
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.22",
+    "pdf2json": "^1.2.1"
   },
   "devDependencies": {
     "jsdoc": "^3.6.6"
