@@ -27,10 +27,6 @@ var ClientSchema = new Schema({
         required: 'Client name is required',
     },
     // todo - payments should update after newly added bill
-    payments: {
-        type: DoubleType,
-        default: 0.0
-    },
     decription: {
         type: String
     },
