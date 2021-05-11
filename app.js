@@ -48,6 +48,9 @@ var routesJudges = require('./API/routes/judgeRoutes');
 var routesLegalEntities = require('./API/routes/legalEntityRoutes');
 var routesContactDetails = require('./API/routes/contactDetailsRoutes');
 var routesAppointmentRoutes = require('./API/routes/appointmentRoutes');
+var authMiddleware = require('./API/middleware/authMiddleware');
+
+app.use(authMiddleware)
 
 routesCases(app);
 routesUsers(app);
