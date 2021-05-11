@@ -5,11 +5,19 @@ var Schema = mongoose.Schema;
 var LegalEntitySchema = new Schema({
     roleInCase: {
         type: String,
-        required: 'Role is required'
+        required: 'Enter the type',
+        enum:{
+            values: ['PERSON', 'COMPANY'],
+            message: '{VALUE} is not supported'
+        }
     },
     typeOfEntity: {
         type: String,
-        required: 'Type of entity is required'
+        required: 'Enter the type',
+        enum:{
+            values: ['PERSON', 'COMPANY'],
+            message: '{VALUE} is not supported'
+        }
     },
     decription: {
         type: String,
