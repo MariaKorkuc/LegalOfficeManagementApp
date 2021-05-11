@@ -1,7 +1,13 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-  Document = mongoose.model('Documents');
+const mongoose = require('mongoose');
+const Document = mongoose.model('Documents');
+const Attachment = mongoose.model('Attachments');
+
+const fs = require('fs');
+const PDFParser = require("pdf2json");
+
+
 
 exports.list_all_documents = function(req, res) {
 //Check if the user is an administrator and if not: res.status(403); "an access token is valid, but requires more privileges"
@@ -15,21 +21,40 @@ Document.find(function(err, documents) {
 });
 };
 
-exports.create_a_document = function(req, res) {
-    var new_document = new Document(req.body);
-    new_document.save(function(err, document) {
-      if (err){
-        if(err.name=='ValidationError') {
-            res.status(422).send(err);
-        }
-        else{
-          res.status(500).send(err);
-        }
-      }
-      else{
-        res.json(document);
+exports.create_a_document = async function(req, res) {
+  const file = req.files.file;
+
+  const fileName = 'test_file_1_' + new Date().getTime() + '.pdf';
+  await file.mv('/tmp/' + fileName);
+
+  const pdfParser = new PDFParser(this, 1);
+  pdfParser.on("pdfParser_dataError", errData => {
+    res.status(400).json({ error: errData });
+  });
+
+  pdfParser.on("pdfParser_dataReady", pdfData => {
+    const rawtextCorpuse = pdfParser.getRawTextContent();
+
+    var newattachment = new Attachment({
+      displayName: file.name,
+      textVector: rawtextCorpuse,
+      type: 'pdf', // for now
+      link: req.protocol + '://' + req.hostname + ':8080' + '/download/' + fileName
+    });
+
+    const newDocument = new Document({ ...req.body, modificationUserId: req.User._id });
+    newDocument.attachments.push(newattachment);
+    newDocument.save((err, document) => {
+
+      if (err) {
+        res.status(400).json({ error: errData });
+      } else {
+        res.json(document)
       }
     });
+  });
+
+  pdfParser.loadPDF('/tmp/' + fileName);
   };
   
 
@@ -85,8 +110,6 @@ exports.delete_a_document = function(req, res) {
 
 
 
-var mongoose = require('mongoose'),
-    Attachment = mongoose.model('Attachments');
 
 exports.create_an_attachment = function(req, res) {
     var new_att = new Attachment(req.body);

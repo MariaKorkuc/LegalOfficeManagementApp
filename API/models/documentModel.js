@@ -12,6 +12,18 @@ var AttachmentSchema = new Schema({
         type: String,
         required: 'Name is required'
     },
+    textVector: {
+        type: String,
+        required: 'Link is required'
+    },
+    type: {
+        type: String,
+        enum: {
+            values: ['pdf'],
+            message: '{VALUE} is not supported'
+          },
+        required: 'Type of case is required'
+    },
     link: {
         type: String,
         required: 'Link is required'
@@ -21,43 +33,17 @@ var AttachmentSchema = new Schema({
 var DocumentSchema = new Schema({
     name: {
         type: String,
-        validate: {
-            validator: function(v) {
-                return /^\w{8}$/.test(v);
-            },
-            message: 'Name is not valid!, Pattern("^\w{8}$")'
-        },
         required: 'Case name is required'
-    },
-    type: {
-        type: String,
-        enum: {
-            values: ['type1', 'type2'],
-            message: '{VALUE} is not supported'
-          },
-        required: 'Type of case is required'
-    },
-    creationDate: {
-        type: Date,
-        default: Date.now
-    },
-    modificationDate: {
-        type: Date,
-        default: Date.now
     },
     description: {
         type: String
     },
+    modificationUserId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Users'
+    },
     attachments: [AttachmentSchema]
-}, { strict: false });
-
-
-// DocumentSchema.pre('save', function(callback) {
-//     var new_doc = this;
-//     new_doc.id = idGenerator();
-
-//     callback();
-// });
+}, { strict: false, timestamps: true });
 
 module.exports = mongoose.model('Documents', DocumentSchema);
 module.exports = mongoose.model('Attachments', AttachmentSchema);
