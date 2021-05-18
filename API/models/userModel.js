@@ -1,10 +1,12 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+const { schema: AppointmentSchema } = require('./appointmentModel');
 
 
-var UserSchema = new Schema({
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -52,12 +54,13 @@ var UserSchema = new Schema({
       type: String,
       required: 'Enter the user role(s)',
       enum: ['LAWYER', 'ADMIN', 'DIRECTOR']
-    }]
-}, { strict: false });
+    }],
+    appointments: [AppointmentSchema]
+}, { strict: false, timestamps: true });
 
 
 UserSchema.pre('save', function(callback) {
-    var user = this;
+    const user = this;
     if (!user.isModified('password')) return callback();
 
     bcrypt.genSalt(8, function(err, salt) {
@@ -80,4 +83,4 @@ UserSchema.methods.verifyPassword = function(password, cb) {
 };
 
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

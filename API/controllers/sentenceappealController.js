@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-  SentenceAppeal = mongoose.model('SentenceAppeals');
+  SentenceAppeal = mongoose.model('SentenceAppeal');
 
 exports.list_all_sa = function(req, res) {
 //Check if the user is an administrator and if not: res.status(403); "an access token is valid, but requires more privileges"

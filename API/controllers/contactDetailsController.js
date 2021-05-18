@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-ContactDetails = mongoose.model('Contact Details');
+ContactDetails = mongoose.model('ContactDetail');
 
 exports.list_all_contactDetails = function(req, res) {
     ContactDetails.find(function(err, contactDetails) {

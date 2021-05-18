@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-LegalEntity = mongoose.model('Legal Entities');
+LegalEntity = mongoose.model('LegalEntity');
 
 exports.list_all_legalEntity = function(req, res) {
     LegalEntity.find(function(err, legalEntity) {
