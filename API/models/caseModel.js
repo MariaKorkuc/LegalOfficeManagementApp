@@ -1,23 +1,29 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-const customAlphabet = require("nanoid").customAlphabet;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 
-var CaseSchema = new Schema({
+const { schema: JudgeSchema } = require('./judgeModel');
+const { schema: LegalEntitySchema } = require('./legalEntityModel');
+const { schema: SentenceAppealSchema } = require('./sentenceAppealModel');
+
+
+const CaseSchema = new Schema({
     name: {
         type: String,
         required: 'Case name is required',
-        unique: true
+        unique: true,
+        index: true
     },
     type: {
         type: String,
         enum: {
-            values: ['type1', 'type2'],
+            values: ['CRIMINAL', 'CIVIL', 'FAMILY'],
             message: '{VALUE} is not supported'
           },
         required: 'Type of case is required'
+    },
+    description: {
+        type: String
     },
     status: {
         type: String,
@@ -29,26 +35,19 @@ var CaseSchema = new Schema({
     },
     startDate: {
         type: Date,
-        required: 'Start date is required'
+        required: 'Start date is required',
+        index: true
     },
     endDate: {
-        type: Date
-    },
-    modificationDate: {
         type: Date,
-        default: Date.now
+        index: true
     },
-    description: {
-        type: String
-    }
-}, { strict: false });
+    judges: [JudgeSchema],
+    legalEntities: [LegalEntitySchema],
+    sentenceAppeals: [SentenceAppealSchema],
+    affiliatedClients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
+    assignedUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    documents: [{ type: Schema.Types.ObjectId, ref: 'Document' }]
+}, { strict: false, timestamps: true });
 
-
-// CaseSchema.pre('save', function(callback) {
-//     var new_case = this;
-//     new_case.id = idGenerator();
-
-//     callback();
-// });
-
-module.exports = mongoose.model('Cases', CaseSchema);
+module.exports = mongoose.model('Case', CaseSchema);

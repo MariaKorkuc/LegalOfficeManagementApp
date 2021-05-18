@@ -1,6 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
-const User = mongoose.model('Users');
+const User = mongoose.model('User');
 
 
 exports.register_new_user = function (req, res) {

@@ -1,10 +1,11 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-require('mongoose-double')(mongoose);
-var DoubleType = mongoose.Schema.Types.Double;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var ClientSchema = new Schema({
+
+const { schema: ContactDetailSchema } = require('./contactDetailsModel');
+
+
+const ClientSchema = new Schema({
     pesel: {
         type: String,
         validate: {
@@ -26,14 +27,14 @@ var ClientSchema = new Schema({
         },
         required: 'Client name is required',
     },
-    // todo - payments should update after newly added bill
     decription: {
         type: String
     },
     isActiveClient: {
         type: Boolean
     },
-    historyOfAppointments: [Date]
-}, { strict: false });
+    historyOfAppointments: [Date],
+    contactDetail: ContactDetailSchema
+}, { strict: false, timestamps: true });
 
-module.exports = mongoose.model('Clients', ClientSchema);
+module.exports = mongoose.model('Client', ClientSchema);

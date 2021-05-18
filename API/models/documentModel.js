@@ -1,13 +1,7 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// const customAlphabet = require("nanoid").customAlphabet;
-// const idGenerator = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 5);
-// const dateFormat = require('dateformat');
-
-
-var AttachmentSchema = new Schema({
+const AttachmentSchema = new Schema({
     displayName: {
         type: String,
         required: 'Name is required'
@@ -28,9 +22,10 @@ var AttachmentSchema = new Schema({
         type: String,
         required: 'Link is required'
     }
-}, { strict: false });
+}, { strict: false, timestamps: true });
 
-var DocumentSchema = new Schema({
+
+const DocumentSchema = new Schema({
     name: {
         type: String,
         required: 'Case name is required'
@@ -45,5 +40,5 @@ var DocumentSchema = new Schema({
     attachments: [AttachmentSchema]
 }, { strict: false, timestamps: true });
 
-module.exports = mongoose.model('Documents', DocumentSchema);
-module.exports = mongoose.model('Attachments', AttachmentSchema);
+
+module.exports = mongoose.model('Document', DocumentSchema);
