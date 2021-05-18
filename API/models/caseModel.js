@@ -6,6 +6,7 @@ const { schema: JudgeSchema } = require('./judgeModel');
 const { schema: LegalEntitySchema } = require('./legalEntityModel');
 const { schema: SentenceAppealSchema } = require('./sentenceAppealModel');
 
+
 const CaseSchema = new Schema({
     name: {
         type: String,
@@ -45,7 +46,8 @@ const CaseSchema = new Schema({
     legalEntities: [LegalEntitySchema],
     sentenceAppeals: [SentenceAppealSchema],
     affiliatedClients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
-    assignedUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+    assignedUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    documents: [{ type: Schema.Types.ObjectId, ref: 'Document' }]
 }, { strict: false, timestamps: true });
 
 module.exports = mongoose.model('Case', CaseSchema);
