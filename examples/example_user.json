@@ -1,0 +1,10 @@
+{
+    "username": "test_user1",
+    "password": "test_user1",
+    "name": "Kamil",
+    "surname": "Bednarek",
+    "email": "test@test.pl",
+    "phone": "666666666",
+    "address": "co kolwiek 1",
+    "role": "LAWYER"
+}

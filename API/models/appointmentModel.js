@@ -1,8 +1,9 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var AppointmentSchema = new Schema({
+
+const AppointmentSchema = new Schema({
+    clients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
     date: {
         type: Date,
         required: 'Date is required'
@@ -10,7 +11,7 @@ var AppointmentSchema = new Schema({
     description: {
         type: String,
         required: 'Description is required'
-    },
-}, { strict: false });
+    }
+}, { strict: false, timestamps: true });
 
-module.exports = mongoose.model('Appointments', AppointmentSchema);
+module.exports = mongoose.model('Appointment', AppointmentSchema);

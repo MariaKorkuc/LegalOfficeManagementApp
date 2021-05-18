@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-  Client = mongoose.model('Clients');
+  Client = mongoose.model('Client');
 
 exports.list_all_clients = function(req, res) {
     Client.find(function(err, clients) {

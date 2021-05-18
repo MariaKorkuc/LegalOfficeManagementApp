@@ -1,8 +1,8 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var ContactDetailsSchema = new Schema({
+
+const ContactDetailsSchema = new Schema({
     email: {
         type: String,
         required: 'Email is required',
@@ -39,6 +39,6 @@ var ContactDetailsSchema = new Schema({
     companyName: {
         type: String,
     },
-}, { strict: false });
+}, { strict: false, timestamps: true });
 
-module.exports = mongoose.model('Contact Details', ContactDetailsSchema);
+module.exports = mongoose.model('ContactDetail', ContactDetailsSchema);

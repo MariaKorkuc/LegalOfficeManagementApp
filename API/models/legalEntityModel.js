@@ -1,28 +1,23 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var LegalEntitySchema = new Schema({
+
+const { schema: ContactDetailSchema } = require('./contactDetailsModel');
+
+const LegalEntitySchema = new Schema({
     roleInCase: {
         type: String,
         required: 'Enter the type',
         enum:{
-            values: ['PERSON', 'COMPANY'],
-            message: '{VALUE} is not supported'
-        }
-    },
-    typeOfEntity: {
-        type: String,
-        required: 'Enter the type',
-        enum:{
-            values: ['PERSON', 'COMPANY'],
+            values: ['WITNESS', 'DEFENDANT'],
             message: '{VALUE} is not supported'
         }
     },
     decription: {
         type: String,
         required: 'descrition is required'
-    }
-}, { strict: false });
+    },
+    contactDetail: ContactDetailSchema
+}, { strict: false, timestamps: true });
 
-module.exports = mongoose.model('Legal Entities', LegalEntitySchema);
+module.exports = mongoose.model('LegalEntity', LegalEntitySchema);

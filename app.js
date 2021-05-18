@@ -1,35 +1,34 @@
-const  express = require('express');
+const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
+const morgan = require('morgan');
 
 
-const Case = require('./API/models/caseModel');
-const User = require('./API/models/userModel');
-const Document = require('./API/models/documentModel');
-const SentenceAppeal = require('./API/models/sentenceappealModel');
-const Client = require('./API/models/clientModel');
-const Judge = require('./API/models/judgeModel');
-const LegalEntities = require('./API/models/legalEntityModel');
-const ContactDetails = require('./API/models/contactDetailsModel');
-const Appointments = require('./API/models/appointmentModel');
+require('./API/models/caseModel');
+require('./API/models/userModel');
+
+require('./API/models/clientModel');
+require('./API/models/legalEntityModel');
+
+require('./API/models/documentModel');
+require('./API/models/appointmentModel');
 
 
-var mongoDBUser = process.env.user || "legalAdmin";
-var mongoDBPass = process.env.pass || "UWMVD2SkPx1maUfWRvNk";
+const mongoDBUser = process.env.user || "legalAdmin";
+const mongoDBPass = process.env.pass || "UWMVD2SkPx1maUfWRvNk";
 
-var mongoDBHostname = process.env.mongoDBHostname || "localhost";
-var mongoDBPort = process.env.mongoDBPort || "27017";
-var mongoDBName = process.env.mongoDBName || "LegalOfficeManagement";
-var mongoDBURI = "mongodb://" + mongoDBUser + ":" + mongoDBPass + "@" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
+const mongoDBHostname = process.env.mongoDBHostname || "localhost";
+const mongoDBPort = process.env.mongoDBPort || "27017";
+const mongoDBName = process.env.mongoDBName || "LegalOfficeManagement";
+const mongoDBURI = "mongodb://" + mongoDBUser + ":" + mongoDBPass + "@" + mongoDBHostname + ":" + mongoDBPort + "/" + mongoDBName;
 
 
 mongoose.set('useCreateIndex', true); //removes a deprecation warning
 mongoose.connect(mongoDBURI, {
-    //reconnectTries: 10,
-    //reconnectInterval: 500,
+    // reconnectTries: 3,
+    // reconnectInterval: 300,
     poolSize: 10, // Up to 10 sockets
     connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
     socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
@@ -43,7 +42,6 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.set('port', port);
-
 
 app.use(morgan('dev'));
 

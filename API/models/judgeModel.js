@@ -1,8 +1,7 @@
-'use strict';
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var JudgeSchema = new Schema({
+const JudgeSchema = new Schema({
     name: {
         type: String,
         required: 'Judge name is required',
@@ -18,6 +17,6 @@ var JudgeSchema = new Schema({
     descripion: {
         type: String
     }
-}, { strict: false });
+}, { strict: false, timestamps: true });
 
-module.exports = mongoose.model('Judges', JudgeSchema);
+module.exports = mongoose.model('Judge', JudgeSchema);

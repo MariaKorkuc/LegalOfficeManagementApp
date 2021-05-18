@@ -3,7 +3,7 @@
 // add listing for a lawyer
 
 var mongoose = require('mongoose'),
-  Case = mongoose.model('Cases');
+  Case = mongoose.model('Case');
 
 
 exports.list_all_cases = function(req, res) {

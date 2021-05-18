@@ -1,8 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-  Judge = mongoose.model('Judges');
+  Judge = mongoose.model('Judge');
 
+  
 exports.list_all_judges = function(req, res) {
     Judge.find(function(err, judges) {
         if (err){

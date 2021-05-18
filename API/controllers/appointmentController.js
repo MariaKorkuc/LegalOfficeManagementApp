@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-  Appointment = mongoose.model('Appointments');
+  Appointment = mongoose.model('Appointment');
 
 exports.list_all_appointment = function(req, res) {
     Appointment.find(function(err, appointment) {

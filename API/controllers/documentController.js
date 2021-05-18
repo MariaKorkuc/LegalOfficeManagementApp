@@ -1,10 +1,7 @@
-'use strict';
 
 const mongoose = require('mongoose');
-const Document = mongoose.model('Documents');
-const Attachment = mongoose.model('Attachments');
+const Document = mongoose.model('Document');
 
-const fs = require('fs');
 const PDFParser = require("pdf2json");
 
 
@@ -34,16 +31,13 @@ exports.create_a_document = async function(req, res) {
 
   pdfParser.on("pdfParser_dataReady", pdfData => {
     const rawtextCorpuse = pdfParser.getRawTextContent();
-
-    var newattachment = new Attachment({
+    const newDocument = new Document({ ...req.body, modificationUserId: req.User._id });
+    newDocument.attachments.push({
       displayName: file.name,
       textVector: rawtextCorpuse,
       type: 'pdf', // for now
       link: req.protocol + '://' + req.hostname + ':8080' + '/download/' + fileName
     });
-
-    const newDocument = new Document({ ...req.body, modificationUserId: req.User._id });
-    newDocument.attachments.push(newattachment);
     newDocument.save((err, document) => {
 
       if (err) {
@@ -108,28 +102,8 @@ exports.delete_a_document = function(req, res) {
   };
 
 
-
-
-
-exports.create_an_attachment = function(req, res) {
-    var new_att = new Attachment(req.body);
-    new_att.save(function(err, att) {
-        if (err){
-            if(err.name=='ValidationError') {
-                res.status(422).send(err);
-            }
-            else{
-                res.status(500).send(err);
-            }
-            }
-        else{
-            res.json(att);
-        }
-    });
-};
-
 exports.read_an_attachment = function(req, res) {
-    Attachment.findById(req.params.attachmentId, function(err, att) {
+  Document.findById(req.params.attachmentId, function(err, att) {
       if (err){
         res.status(500).send(err);
       }
@@ -138,14 +112,3 @@ exports.read_an_attachment = function(req, res) {
       }
     });
   };
-
-exports.delete_an_attachment = function(req, res) {
-Attachment.deleteOne({_id: req.params.attId}, function(err, att) {
-    if (err){
-    res.status(500).send(err);
-    }
-    else{
-    res.json({ message: 'Attachment successfully deleted' });
-    }
-});
-};

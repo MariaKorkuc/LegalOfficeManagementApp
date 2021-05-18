@@ -1,0 +1,18 @@
+{
+	"pesel": "90111236666",
+	"name": "Anna",
+	"bill": 3000.0,
+	"payments": 0.0
+}
+
+{
+    "name": "ABD324",
+    "type": "type1",
+    "startDate": "2020-09-28"
+}
+
+{
+    "name": "Anna Maria",
+    "surname": "Wesołowska",
+    "court": "Sad Okregowy w Krakowie"
+}
