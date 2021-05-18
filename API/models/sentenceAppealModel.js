@@ -12,7 +12,7 @@ const SentenceAppealSchema = new Schema({
     type: {
         type: String,
         enum: {
-            values: ['sentence', 'appeal'],
+            values: ['SENTENCE', 'APPEAL'],
             message: '{VALUE} is not supported'
           },
         required: 'Sentence or appeal?'
