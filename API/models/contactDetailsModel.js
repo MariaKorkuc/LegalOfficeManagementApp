@@ -33,9 +33,6 @@ const ContactDetailsSchema = new Schema({
     surname: {
         type: String,
     },
-    typeOfActivity: {
-        type: String,
-    },
     companyName: {
         type: String,
     },
