@@ -41,4 +41,10 @@ const DocumentSchema = new Schema({
 }, { strict: false, timestamps: true });
 
 
-module.exports = mongoose.model('Document', DocumentSchema);
+const Document = mongoose.model('Document', DocumentSchema);
+Document.collection.createIndex({
+    'attachments.textVector': 'text'
+})
+
+
+module.exports = Document;

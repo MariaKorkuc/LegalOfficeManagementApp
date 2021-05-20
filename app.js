@@ -73,6 +73,8 @@ var routesJudges = require('./API/routes/judgeRoutes');
 var routesLegalEntities = require('./API/routes/legalEntityRoutes');
 var routesContactDetails = require('./API/routes/contactDetailsRoutes');
 var routesAppointmentRoutes = require('./API/routes/appointmentRoutes');
+var routesAnaliticsRoutes = require('./API/routes/analiticsRoutes');
+
 
 const { authRoutes } = require('./API/routes/authRoutes');
 const { authMiddleware } = require('./API/middleware/authMiddleware');
@@ -92,6 +94,7 @@ routesJudges(app);
 routesLegalEntities(app);
 routesContactDetails(app);
 routesAppointmentRoutes(app);
+routesAnaliticsRoutes(app);
 
 console.log("Connecting DB to: " + mongoDBURI);
 mongoose.connection.on("open", function (err, conn) {

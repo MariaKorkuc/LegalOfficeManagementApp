@@ -18,14 +18,7 @@ const ClientSchema = new Schema({
         unique: true
     },
     name: {
-        type: String,
-        validate: {
-            validator: function(v) {
-                return /^[a-zA-Z\-]+$/i.test(v);
-            },
-            message: 'Name is not valid!, Pattern("^\w{8}$")'
-        },
-        required: 'Client name is required',
+        type: String
     },
     decription: {
         type: String
@@ -33,7 +26,6 @@ const ClientSchema = new Schema({
     isActiveClient: {
         type: Boolean
     },
-    historyOfAppointments: [Date],
     contactDetail: ContactDetailSchema
 }, { strict: false, timestamps: true });
 

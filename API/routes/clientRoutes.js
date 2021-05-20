@@ -10,4 +10,7 @@ module.exports = function (app) {
         .get(clients.read_a_client)
         .put(clients.update_a_client)
         .delete(clients.delete_a_client)
+        
+    app.route('/clients/:clientId/case/:caseId')
+        .post(clients.assign_client_to_case);
 };

@@ -72,3 +72,30 @@ exports.delete_a_client = function(req, res) {
         }
     });
 };
+
+exports.assign_client_to_case = async function(req, res) {
+    const Case = mongoose.model('Case');
+  
+    try {
+      const clientData = await Client.findById(req.params.clientId);
+      const caseData = await Case.findOneAndUpdate({
+        _id: req.params.caseId,
+        affiliatedClients: { $ne: clientData.id }
+      }, {
+        $push: {
+          affiliatedClients: clientData.id
+        }
+      });
+  
+      if (!caseData) {
+        res.json({
+          status: 'Client alredy exist in that Case!'
+        });
+      }
+  
+      return res.json(caseData);
+    } catch (error) {
+      res.status(400).json({error: 'missing Case/clientData'}); 
+    }
+  };
+  
