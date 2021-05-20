@@ -90,14 +90,17 @@ exports.search_in_document = async function(req, res) {
   try {
     const results = await Document.find({
       $text: {
-        $search: q,
+        $search: decodeURI(q),
         $caseSensitive: true,
         $language: "english"
       }
     }, { score : { $meta: "textScore" } })
     .sort({ score : { $meta : 'textScore' } });
 
-    return res.json(results);
+    return res.json({
+      searchQuery: decodeURI(q),
+      results
+    });
 
   } catch (error) {
     res.status(400).json({ error });

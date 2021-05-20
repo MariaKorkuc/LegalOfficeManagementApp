@@ -79,7 +79,7 @@ module.exports.longest_cases = async (req, res) => {
                 case_duration_in_days: {
                     $trunc: {
                         $divide: [{
-                            $subtract: ['$startDate', '$endDate']
+                            $subtract: [ '$endDate', '$startDate']
                         }, 1000 * 60 * 60 * 24]
                     }
                 }
