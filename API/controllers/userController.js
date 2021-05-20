@@ -1,6 +1,7 @@
 'use strict';
-var mongoose = require('mongoose'),
-  User = mongoose.model('User');
+var mongoose = require('mongoose');
+const User = mongoose.model('User');
+ 
 
 exports.list_all_users = function(req, res) {
     //Check if the role param exist
@@ -96,4 +97,65 @@ exports.delete_a_user = function(req, res) {
             res.json({ message: 'User successfully deleted' });
         }
     });
+};
+
+exports.list_all_user_cases = async function(req, res) {
+    const Case = mongoose.model('Case');
+    
+    try {
+      const user = await User.findById(req.params.userId);
+      const userCases = await Case.find({ assignedUsers: user.id });
+  
+      return res.json(userCases);
+      
+    } catch (error) {
+      res.status(400).json({error});
+    }
+};
+
+exports.list_all_user_cases = async function(req, res) {
+  const Case = mongoose.model('Case');
+  
+  try {
+    const user = await User.findById(req.params.userId);
+    const userCases = await Case.find({ assignedUsers: user.id });
+
+    return res.json(userCases);
+    
+  } catch (error) {
+    res.status(400).json({error});
+  }
+};
+
+
+exports.cases_by_user = async function(req, res) {
+  
+};
+
+
+
+exports.assign_user_to_case = async function(req, res) {
+  const Case = mongoose.model('Case');
+
+  try {
+    const userData = await User.findById(req.params.userId);
+    const caseData = await Case.findOneAndUpdate({
+      _id: req.params.caseId,
+      assignedUsers: { $ne: userData.id }
+    }, {
+      $push: {
+        assignedUsers: userData.id
+      }
+    });
+
+    if (!caseData) {
+      res.json({
+        status: 'User alredy exist in that Case!'
+      });
+    }
+
+    return res.json(caseData);
+  } catch (error) {
+    res.status(400).json({error: 'missing Case/User'}); 
+  }
 };

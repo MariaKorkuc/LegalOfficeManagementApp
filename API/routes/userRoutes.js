@@ -6,6 +6,9 @@ module.exports = function(app) {
     .get(users.list_all_users)
     .post(users.create_a_user);
 
+  app.route('/users/:userId/case/:caseId')
+    .post(users.assign_user_to_case);
+
   app.route('/users/:userId')
     .get(users.read_a_user)
 	.put(users.update_a_user)
@@ -13,4 +16,8 @@ module.exports = function(app) {
 
   app.route('/users/:userId/validate')
   .put(users.validate_a_user)
+
+  app.route('/users/:userId/cases')
+  .get(users.list_all_user_cases)
+
 };
