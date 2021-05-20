@@ -49,27 +49,12 @@ module.exports.users_with_most_cases = async (req, res) => {
 
 module.exports.documents_per_cases = async (req, res) => {
     try {
-        result = await CaseModel.aggregate([{
-                $unwind: {
-                    path: "$documents",
-                    preserveNullAndEmptyArrays: false
-                }
-            },
+        result = await CaseModel.aggregate([
             {
-                $group: {
-                    _id: "$documents",
-                    count: {
-                        $sum: 1
-                    }
-                }
-            },
-            {
-                $lookup: {
-                    from: 'documents',
-                    localField: '_id',
-                    foreignField: '_id',
-                    as: 'documents'
-                }
+                $project: {
+                    caseData: "$$ROOT",
+                    'count': {$size: '$documents'}
+            }
             },
             {
                 $sort: {
@@ -78,10 +63,7 @@ module.exports.documents_per_cases = async (req, res) => {
             }
         ]);
 
-        return res.json(result.map(document => ({
-            document: document.documents[0],
-            count: document.count
-        })))
+        return res.json(result)
     } catch (error) {
         res.status(400).json({
             error
