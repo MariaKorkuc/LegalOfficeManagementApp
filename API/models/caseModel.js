@@ -28,7 +28,7 @@ const CaseSchema = new Schema({
     status: {
         type: String,
         enum: {
-            values: ['Open', 'Closed', 'Reopened'],
+            values: ['OPEN', 'CLOSED', 'REOPENED'],
             message: '{VALUE} is not supported'
           },
         default: 'Open'

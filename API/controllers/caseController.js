@@ -2,8 +2,11 @@
 
 // add listing for a lawyer
 
-var mongoose = require('mongoose'),
-  Case = mongoose.model('Case');
+var mongoose = require('mongoose');
+var Case = mongoose.model('Case');
+var Judge = mongoose.model('Judge');
+var SentenceAppeals = mongoose.model('SentenceAppeal');
+var LegalEntity = mongoose.model('LegalEntity');
 
 
 exports.list_all_cases = function(req, res) {
@@ -49,8 +52,20 @@ exports.read_a_case = function(req, res) {
 };
 
 exports.create_a_case = function(req, res) {
-    //Check that user is a Customer and if not: res.status(403); "an access token is valid, but requires more privileges"
+
     var new_case = new Case(req.body);
+    // var data = await new_case.save();
+
+    // var judges = new Judge(req.body.judges);
+    // await judges.save();
+
+    // var legalEntities = new LegalEntity(req.body.legalEntities)
+    // await legalEntities.save()
+
+    // var sentenceAppeals = new SentenceAppeals(req.body.sentenceAppeals)
+    // await sentenceAppeals.save()
+
+    // return data;
 
     new_case.save(function(err, mcase) {
         if (err){

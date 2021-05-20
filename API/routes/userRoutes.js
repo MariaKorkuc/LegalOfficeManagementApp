@@ -13,4 +13,7 @@ module.exports = function(app) {
 
   app.route('/users/:userId/validate')
   .put(users.validate_a_user)
+
+  app.route('/users/:userId/cases')
+  .get(users.list_all_user_cases)
 };
