@@ -3,7 +3,8 @@
 // add listing for a lawyer
 
 var mongoose = require('mongoose'),
-  Case = mongoose.model('Case');
+  Case = mongoose.model('Case'),
+  User = mongoose.model('User');
 
 
 exports.list_all_cases = function(req, res) {
@@ -28,14 +29,116 @@ exports.list_all_cases = function(req, res) {
 //     });
 // };
 
+exports.list_all_lawyer_cases = function(req, res) {
+  var query = {};
+  //if clerkId is null, i.e. parameter is not in the URL, the search retrieves orders not assined to any clerk
+  //else, the search retrieves orders assined to the specified clerk
+  query.assignedUsers = {};
+  query.assignedUsers._id = req.params.userId;
+  //User.findById(req.params.userId);
 
-// exports.search_cases = function(req, res) {
-//     //Check if category param exists (category: req.query.category)
-//     //Check if keyword param exists (keyword: req.query.keyword)
-//     //Search depending on params but only if deleted = false
-//     console.log('Searching a case depending on params');
-//     res.send('Item returned from the case search');
-//   };
+  if (req.query.userId) {
+    query.assignedUsers._id = req.query.userId;
+  }
+
+  if (req.query.status) {
+    query.status = { $exists: true };
+  }
+  if (req.query.type) {
+    query.type = { $exists: true };
+  }
+
+  var limit=10;
+  if(req.query.pageSize){
+    limit=parseInt(req.query.pageSize);
+  }
+
+  var sort="";
+  if(req.query.reverse=="true"){
+    sort="-";
+  }
+
+  if(req.query.sortedBy){
+    sort+=req.query.sortedBy;
+  }
+
+  console.log("Query: "+query+ " Limit:" + limit+" Sort:" + sort);
+
+  Case.find(query)
+       .sort(sort)
+       .limit(limit)
+       .lean()
+       .exec(function(err, cases){
+            console.log('Start searching cases for lawyer');
+            if (err){
+              res.send(err);
+            }
+            else{
+              res.json(cases);
+            }
+            console.log('End searching cases');
+        });
+};
+
+exports.search_sa_for_case = function(req, res) {
+  var query = {};
+  query.SentenceAppeals = {};
+  //if clerkId is null, i.e. parameter is not in the URL, the search retrieves orders not assined to any clerk
+  //else, the search retrieves orders assined to the specified clerk
+
+
+  if (req.query.type) {
+    //retrieving orders with a cancelationMoment
+      query.SentenceAppeals.type = { $exists: true };
+  }
+
+  if (req.query.status) {
+    //retrieving orders with a cancelationMoment
+      query.SentenceAppeals.status = { $exists: true };
+  }
+
+  console.log('Q '+query);
+
+  var limit=10;
+  if(req.query.pageSize){
+    limit=parseInt(req.query.pageSize);
+  }
+
+  var sort="";
+  if(req.query.reverse=="true"){
+    sort="-";
+  }
+
+  console.log("Query: "+query+ " Limit:" + limit+" Sort:" + sort);
+
+  Case.find(query)
+       .sort(sort)
+       .limit(limit)
+       .lean()
+       .exec(function(err, cases){
+            console.log('Start searching sentences/appeals for cases');
+            if (err){
+              res.send(err);
+            }
+            else{
+              res.json(cases);
+            }
+            console.log('End searching cases');
+        });
+};
+
+exports.read_an_sa = function(req, res) {
+  SentenceAppeal.findById(req.params.saId, function(err, cases) {
+    if (err){
+      res.status(500).send(err);
+    }
+    else{
+      res.json(cases);
+    }
+  });
+};
+
+
 
 exports.read_a_case = function(req, res) {
     Case.findById(req.params.caseId, function(err, mcase) {

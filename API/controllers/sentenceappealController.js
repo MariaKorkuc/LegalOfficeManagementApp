@@ -33,13 +33,6 @@ exports.create_an_sa = function(req, res) {
   };
   
 
-// exports.search_sa = function(req, res) {
-// //Check if category param exists (category: req.query.category)
-// //Check if keyword param exists (keyword: req.query.keyword)
-// //Search depending on params but only if deleted = false
-// console.log('Searching an sa depending on params');
-// res.send('Item returned from the sa search');
-// };
 
 exports.read_an_sa = function(req, res) {
     SentenceAppeal.findById(req.params.saId, function(err, sa) {

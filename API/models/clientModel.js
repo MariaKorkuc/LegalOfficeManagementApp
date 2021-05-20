@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 
 const { schema: ContactDetailSchema } = require('./contactDetailsModel');
-
+const { schema: AppointmentSchema } = require('./appointmentModel');
 
 const ClientSchema = new Schema({
     pesel: {
@@ -33,7 +33,7 @@ const ClientSchema = new Schema({
     isActiveClient: {
         type: Boolean
     },
-    historyOfAppointments: [Date],
+    historyOfAppointments: [AppointmentSchema],
     contactDetail: ContactDetailSchema
 }, { strict: false, timestamps: true });
 

@@ -28,7 +28,7 @@ const SentenceAppealSchema = new Schema({
     date: {
         type: Date,
         required: 'Date is required'
-    },
+    }
 }, { strict: false, timestamps: true });
 
 module.exports = mongoose.model('SentenceAppeal', SentenceAppealSchema);

@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 
 const AppointmentSchema = new Schema({
-    clients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
     date: {
         type: Date,
         required: 'Date is required'
